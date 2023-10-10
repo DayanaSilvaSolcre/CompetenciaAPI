@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+
+  api:
+    build: docker/apache
+    container_name: competencia-api
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./docker/apache/ini/php-ini-overrides.ini:/usr/local/etc/php/conf.d/php-ini-overrides.ini
+    ports:
+      - '8091:80'
+    links:
+      - db:competencia-api-mysql
+
+  db:
+    image: mysql:8.0
+    container_name: competencia-api-mysql
+    volumes:
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+      - ./data/db/seeds:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+    ports:
+      - '6601:3306'
