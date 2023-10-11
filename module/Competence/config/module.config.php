@@ -4,6 +4,7 @@ return [
         'factories' => [
             \Competence\V1\Rest\Companies\CompaniesResource::class => \Competence\V1\Rest\Companies\CompaniesResourceFactory::class,
             \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsResource::class => \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsResourceFactory::class,
+            \Competence\V1\Rest\CompaniesServices\CompaniesServicesResource::class => \Competence\V1\Rest\CompaniesServices\CompaniesServicesResourceFactory::class,
         ],
     ],
     'router' => [
@@ -26,12 +27,22 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.companies-services' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/companies-services[/:companies_services_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\CompaniesServices\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
         'uri' => [
             0 => 'competence.rest.companies',
             1 => 'competence.rest.companies-classifications',
+            2 => 'competence.rest.companies-services',
         ],
     ],
     'api-tools-rest' => [
@@ -63,9 +74,8 @@ return [
             'collection_name' => 'companies_classifications',
             'entity_http_methods' => [
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
+                1 => 'PUT',
+                2 => 'DELETE',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -74,15 +84,37 @@ return [
             'collection_query_whitelist' => [],
             'page_size' => 25,
             'page_size_param' => null,
-            'entity_class' => \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsEntity::class,
+            'entity_class' => \CompetenceDomain\Entity\CompanyClassification::class,
             'collection_class' => \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsCollection::class,
             'service_name' => 'CompaniesClassifications',
+        ],
+        'Competence\\V1\\Rest\\CompaniesServices\\Controller' => [
+            'listener' => \Competence\V1\Rest\CompaniesServices\CompaniesServicesResource::class,
+            'route_name' => 'competence.rest.companies-services',
+            'route_identifier_name' => 'companies_services_id',
+            'collection_name' => 'companies_services',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\CompanyServices::class,
+            'collection_class' => \Competence\V1\Rest\CompaniesServices\CompaniesServicesCollection::class,
+            'service_name' => 'CompaniesServices',
         ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\CompaniesClassifications\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\CompaniesServices\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -95,6 +127,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\CompaniesServices\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -102,6 +139,10 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\CompaniesClassifications\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\CompaniesServices\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -131,7 +172,7 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'competence.rest.companies-classifications',
                 'route_identifier_name' => 'companies_classifications_id',
-                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
             ],
             \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsCollection::class => [
                 'entity_identifier_name' => 'id',
@@ -139,11 +180,53 @@ return [
                 'route_identifier_name' => 'companies_classifications_id',
                 'is_collection' => true,
             ],
+            'CompetenceDomain\\Entity\\CompaniesClassifications\\CompaniesClassificationsEntity' => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-classifications',
+                'route_identifier_name' => 'companies_classifications_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            'CompetenceDomain\\Entity\\CompanyClassification\\CompaniesClassification' => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-classifications',
+                'route_identifier_name' => 'companies_classifications_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            \CompetenceDomain\Entity\CompanyClassification::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-classifications',
+                'route_identifier_name' => 'companies_classifications_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            \Competence\V1\Rest\CompaniesServices\CompaniesServicesEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-services',
+                'route_identifier_name' => 'companies_services_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            \Competence\V1\Rest\CompaniesServices\CompaniesServicesCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-services',
+                'route_identifier_name' => 'companies_services_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\CompanyServices::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.companies-services',
+                'route_identifier_name' => 'companies_services_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
         'Competence\\V1\\Rest\\Companies\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\Companies\\Validator',
+        ],
+        'Competence\\V1\\Rest\\CompaniesClassifications\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\CompaniesClassifications\\Validator',
+        ],
+        'Competence\\V1\\Rest\\CompaniesServices\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\CompaniesServices\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -183,6 +266,22 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'isCompetence',
+            ],
+        ],
+        'Competence\\V1\\Rest\\CompaniesClassifications\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+            ],
+        ],
+        'Competence\\V1\\Rest\\CompaniesServices\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
             ],
         ],
     ],

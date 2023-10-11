@@ -1,16 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace CompetenceDomain\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="Solcre\SolcreFramework2\Common\BaseRepository")
- * @ORM\Table(name="companies_classifications")
+ * @ORM\Table(name="companies_services")
  */
-class CompanyClassification
+class CompanyServices
 {
     /**
      * @ORM\Id
@@ -19,13 +14,13 @@ class CompanyClassification
      *
      * @var int
      */
-    private $id;
+private $id;
     /**
-     * @ORM\Column (type="string", name="companies_services")
+     * @ORM\Column (type="string")
      *
      * @var string
      */
-    private $name;
+private $name;
 
     public function getId(): int
     {
@@ -46,5 +41,6 @@ class CompanyClassification
     {
         $this->name = $name;
     }
+
 
 }
