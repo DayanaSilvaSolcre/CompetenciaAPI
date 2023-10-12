@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Competence\V1\Rest\CompaniesClassifications;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;

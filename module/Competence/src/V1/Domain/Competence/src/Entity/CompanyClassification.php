@@ -21,7 +21,7 @@ class CompanyClassification
      */
     private $id;
     /**
-     * @ORM\Column (type="string", name="companies_services")
+     * @ORM\Column (type="string")
      *
      * @var string
      */

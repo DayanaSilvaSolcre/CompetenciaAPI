@@ -8,5 +8,4 @@ use CompetenceCommon\Service\SharedService;
 
 class CompanyClassificationService extends SharedService
 {
-
 }

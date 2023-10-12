@@ -35,17 +35,6 @@ class CompaniesServicesResource extends BaseResource
     }
 
     /**
-     * Delete a collection, or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function deleteList($data)
-    {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
-    }
-
-    /**
      * Fetch a resource
      *
      * @param  mixed $id
