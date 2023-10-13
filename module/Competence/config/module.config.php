@@ -7,6 +7,7 @@ return [
             \Competence\V1\Rest\CompaniesServices\CompaniesServicesResource::class => \Competence\V1\Rest\CompaniesServices\CompaniesServicesResourceFactory::class,
             \Competence\V1\Rest\Customer\CustomerResource::class => \Competence\V1\Rest\Customer\CustomerResourceFactory::class,
             \Competence\V1\Rest\CustomerCategory\CustomerCategoryResource::class => \Competence\V1\Rest\CustomerCategory\CustomerCategoryResourceFactory::class,
+            \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationResource::class => \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationResourceFactory::class,
         ],
     ],
     'router' => [
@@ -56,6 +57,15 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.employee-classification' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/employee-classification[/:employee_classification_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\EmployeeClassification\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -65,6 +75,7 @@ return [
             2 => 'competence.rest.companies-services',
             3 => 'competence.rest.customer',
             4 => 'competence.rest.customer-category',
+            5 => 'competence.rest.employee-classification',
         ],
     ],
     'api-tools-rest' => [
@@ -173,6 +184,27 @@ return [
             'collection_class' => \Competence\V1\Rest\CustomerCategory\CustomerCategoryCollection::class,
             'service_name' => 'CustomerCategory',
         ],
+        'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
+            'listener' => \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationResource::class,
+            'route_name' => 'competence.rest.employee-classification',
+            'route_identifier_name' => 'employee_classification_id',
+            'collection_name' => 'employee_classification',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\EmployeeClassification::class,
+            'collection_class' => \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationCollection::class,
+            'service_name' => 'EmployeeClassification',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -181,6 +213,7 @@ return [
             'Competence\\V1\\Rest\\CompaniesServices\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\Customer\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\CustomerCategory\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -208,6 +241,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -227,6 +265,10 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -342,6 +384,24 @@ return [
                 'route_identifier_name' => 'customer_category_id',
                 'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
             ],
+            \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-classification',
+                'route_identifier_name' => 'employee_classification_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-classification',
+                'route_identifier_name' => 'employee_classification_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\EmployeeClassification::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-classification',
+                'route_identifier_name' => 'employee_classification_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
@@ -359,6 +419,9 @@ return [
         ],
         'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\CustomerCategory\\Validator',
+        ],
+        'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\EmployeeClassification\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -457,6 +520,14 @@ return [
             ],
         ],
         'Competence\\V1\\Rest\\CustomerCategory\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+            ],
+        ],
+        'Competence\\V1\\Rest\\EmployeeClassification\\Validator' => [
             0 => [
                 'required' => true,
                 'validators' => [],
