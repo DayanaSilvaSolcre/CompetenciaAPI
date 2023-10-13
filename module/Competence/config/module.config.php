@@ -6,6 +6,7 @@ return [
             \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsResource::class => \Competence\V1\Rest\CompaniesClassifications\CompaniesClassificationsResourceFactory::class,
             \Competence\V1\Rest\CompaniesServices\CompaniesServicesResource::class => \Competence\V1\Rest\CompaniesServices\CompaniesServicesResourceFactory::class,
             \Competence\V1\Rest\Customer\CustomerResource::class => \Competence\V1\Rest\Customer\CustomerResourceFactory::class,
+            \Competence\V1\Rest\CustomerCategory\CustomerCategoryResource::class => \Competence\V1\Rest\CustomerCategory\CustomerCategoryResourceFactory::class,
         ],
     ],
     'router' => [
@@ -46,6 +47,15 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.customer-category' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/customer-category[/:customer_category_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\CustomerCategory\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -54,6 +64,7 @@ return [
             1 => 'competence.rest.companies-classifications',
             2 => 'competence.rest.companies-services',
             3 => 'competence.rest.customer',
+            4 => 'competence.rest.customer-category',
         ],
     ],
     'api-tools-rest' => [
@@ -141,6 +152,27 @@ return [
             'collection_class' => \Competence\V1\Rest\Customer\CustomerCollection::class,
             'service_name' => 'Customer',
         ],
+        'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
+            'listener' => \Competence\V1\Rest\CustomerCategory\CustomerCategoryResource::class,
+            'route_name' => 'competence.rest.customer-category',
+            'route_identifier_name' => 'customer_category_id',
+            'collection_name' => 'customer_category',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\CustomerCategory::class,
+            'collection_class' => \Competence\V1\Rest\CustomerCategory\CustomerCategoryCollection::class,
+            'service_name' => 'CustomerCategory',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -148,6 +180,7 @@ return [
             'Competence\\V1\\Rest\\CompaniesClassifications\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\CompaniesServices\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\Customer\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\CustomerCategory\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -170,6 +203,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -185,6 +223,10 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\Customer\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -282,6 +324,24 @@ return [
                 'route_identifier_name' => 'customer_id',
                 'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
             ],
+            \Competence\V1\Rest\CustomerCategory\CustomerCategoryEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.customer-category',
+                'route_identifier_name' => 'customer_category_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \Competence\V1\Rest\CustomerCategory\CustomerCategoryCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.customer-category',
+                'route_identifier_name' => 'customer_category_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\CustomerCategory::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.customer-category',
+                'route_identifier_name' => 'customer_category_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
@@ -296,6 +356,9 @@ return [
         ],
         'Competence\\V1\\Rest\\Customer\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\Customer\\Validator',
+        ],
+        'Competence\\V1\\Rest\\CustomerCategory\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\CustomerCategory\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -391,6 +454,14 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'customerCategory',
+            ],
+        ],
+        'Competence\\V1\\Rest\\CustomerCategory\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
             ],
         ],
     ],

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Competence\V1\Rest\Companies;
+namespace Competence\V1\Rest\CustomerCategory;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\Stdlib\Parameters;
 use Solcre\SolcreFramework2\Adapter\PaginatedAdapter;
 use Solcre\SolcreFramework2\Common\BaseResource;
 
-class CompaniesResource extends BaseResource
+class CustomerCategoryResource extends BaseResource
 {
     /**
      * Create a resource
@@ -52,9 +52,9 @@ class CompaniesResource extends BaseResource
      */
     public function fetchAll($params = [])
     {
-        $companies = $this->service->fetchAllPaginated($params, $params['sort'] ?? []);
+        $customerCategory = $this->service->fetchAllPaginated($params, $params['sort'] ?? []);
 
-        return new CompaniesCollection(new PaginatedAdapter($companies));
+        return new CustomerCategoryCollection(new PaginatedAdapter($customerCategory));
     }
 
     /**
