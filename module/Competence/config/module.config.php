@@ -8,6 +8,8 @@ return [
             \Competence\V1\Rest\Customer\CustomerResource::class => \Competence\V1\Rest\Customer\CustomerResourceFactory::class,
             \Competence\V1\Rest\CustomerCategory\CustomerCategoryResource::class => \Competence\V1\Rest\CustomerCategory\CustomerCategoryResourceFactory::class,
             \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationResource::class => \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationResourceFactory::class,
+            \Competence\V1\Rest\SocialNetwork\SocialNetworkResource::class => \Competence\V1\Rest\SocialNetwork\SocialNetworkResourceFactory::class,
+            \Competence\V1\Rest\SocialPost\SocialPostResource::class => \Competence\V1\Rest\SocialPost\SocialPostResourceFactory::class,
         ],
     ],
     'router' => [
@@ -66,6 +68,24 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.social-network' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/social-network[/:social_network_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\SocialNetwork\\Controller',
+                    ],
+                ],
+            ],
+            'competence.rest.social-post' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/social-post[/:social_post_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\SocialPost\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -76,6 +96,8 @@ return [
             3 => 'competence.rest.customer',
             4 => 'competence.rest.customer-category',
             5 => 'competence.rest.employee-classification',
+            6 => 'competence.rest.social-network',
+            7 => 'competence.rest.social-post',
         ],
     ],
     'api-tools-rest' => [
@@ -205,6 +227,48 @@ return [
             'collection_class' => \Competence\V1\Rest\EmployeeClassification\EmployeeClassificationCollection::class,
             'service_name' => 'EmployeeClassification',
         ],
+        'Competence\\V1\\Rest\\SocialNetwork\\Controller' => [
+            'listener' => \Competence\V1\Rest\SocialNetwork\SocialNetworkResource::class,
+            'route_name' => 'competence.rest.social-network',
+            'route_identifier_name' => 'social_network_id',
+            'collection_name' => 'social_network',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\SocialNetwork::class,
+            'collection_class' => \Competence\V1\Rest\SocialNetwork\SocialNetworkCollection::class,
+            'service_name' => 'SocialNetwork',
+        ],
+        'Competence\\V1\\Rest\\SocialPost\\Controller' => [
+            'listener' => \Competence\V1\Rest\SocialPost\SocialPostResource::class,
+            'route_name' => 'competence.rest.social-post',
+            'route_identifier_name' => 'social_post_id',
+            'collection_name' => 'social_post',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\SocialPost::class,
+            'collection_class' => \Competence\V1\Rest\SocialPost\SocialPostCollection::class,
+            'service_name' => 'SocialPost',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -214,6 +278,8 @@ return [
             'Competence\\V1\\Rest\\Customer\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\CustomerCategory\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\SocialNetwork\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\SocialPost\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -246,6 +312,16 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\SocialNetwork\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\SocialPost\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -269,6 +345,14 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\SocialNetwork\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\SocialPost\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -402,6 +486,42 @@ return [
                 'route_identifier_name' => 'employee_classification_id',
                 'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
             ],
+            \Competence\V1\Rest\SocialNetwork\SocialNetworkEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network',
+                'route_identifier_name' => 'social_network_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            \Competence\V1\Rest\SocialNetwork\SocialNetworkCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network',
+                'route_identifier_name' => 'social_network_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\SocialNetwork::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network',
+                'route_identifier_name' => 'social_network_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            \Competence\V1\Rest\SocialPost\SocialPostEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-post',
+                'route_identifier_name' => 'social_post_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \Competence\V1\Rest\SocialPost\SocialPostCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-post',
+                'route_identifier_name' => 'social_post_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\SocialPost::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-post',
+                'route_identifier_name' => 'social_post_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
@@ -422,6 +542,12 @@ return [
         ],
         'Competence\\V1\\Rest\\EmployeeClassification\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\EmployeeClassification\\Validator',
+        ],
+        'Competence\\V1\\Rest\\SocialNetwork\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\SocialNetwork\\Validator',
+        ],
+        'Competence\\V1\\Rest\\SocialPost\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\SocialPost\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -533,6 +659,28 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'name',
+            ],
+        ],
+        'Competence\\V1\\Rest\\SocialNetwork\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+            ],
+        ],
+        'Competence\\V1\\Rest\\SocialPost\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'socialNetworkId',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'imageName',
             ],
         ],
     ],
