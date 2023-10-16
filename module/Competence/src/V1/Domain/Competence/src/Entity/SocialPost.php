@@ -7,8 +7,8 @@ namespace CompetenceDomain\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Solcre\SolcreFramework2\Common\BaseRepository")
- * @ORM\Table(name="social_posts")
+ * @ORM\Entity (repositoryClass="Solcre\SolcreFramework2\Common\BaseRepository")
+ * @ORM\Table (name="social_posts")
  */
 
 class SocialPost
@@ -28,7 +28,7 @@ class SocialPost
      */
     private $socialNetworkId;
     /**
-     * @ORM\Column (type="integer", name="image_name")
+     * @ORM\Column (type="string", name="image_name")
      *
      * @var string
      */

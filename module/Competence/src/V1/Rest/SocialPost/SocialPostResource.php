@@ -1,11 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Competence\V1\Rest\SocialPost;
 
+use Competence\V1\Rest\Companies\CompaniesCollection;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
-use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Laminas\Stdlib\Parameters;
+use Solcre\SolcreFramework2\Adapter\PaginatedAdapter;
+use Solcre\SolcreFramework2\Common\BaseResource;
 
-class SocialPostResource extends AbstractResourceListener
+class SocialPostResource extends BaseResource
 {
     /**
      * Create a resource
@@ -15,7 +20,7 @@ class SocialPostResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        return $this->service->add($data);
     }
 
     /**
@@ -30,17 +35,6 @@ class SocialPostResource extends AbstractResourceListener
     }
 
     /**
-     * Delete a collection, or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function deleteList($data)
-    {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
-    }
-
-    /**
      * Fetch a resource
      *
      * @param  mixed $id
@@ -48,7 +42,7 @@ class SocialPostResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->service->fetch($id);
     }
 
     /**
@@ -59,41 +53,8 @@ class SocialPostResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
-    }
-
-    /**
-     * Patch (partial in-place update) a resource
-     *
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function patch($id, $data)
-    {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
-    }
-
-    /**
-     * Patch (partial in-place update) a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function patchList($data)
-    {
-        return new ApiProblem(405, 'The PATCH method has not been defined for collections');
-    }
-
-    /**
-     * Replace a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function replaceList($data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for collections');
+        $socialPost = $this->service->fetchAllPaginated($params, $params['sort'] ?? []);
+        return new CompaniesCollection(new PaginatedAdapter($socialPost));
     }
 
     /**
