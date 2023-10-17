@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CompetenceDomain\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,7 +32,7 @@ class Company
     /**
      * @ORM\Column (type="date", name="foundation_date")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $foundationDate;
 
@@ -44,6 +45,7 @@ class Company
 
     /**
      * @ORM\Column (type="integer", name="company_classification_id")
+     * @ORM\ManyToOne(targetEntity="CompanyClassification")
      *
      * @var int
      */
@@ -51,6 +53,7 @@ class Company
 
     /**
      * @ORM\Column (type="integer", name="company_service_id")
+     * @ORM\ManyToOne(targetEntity="CompanyClassification")
      *
      * @var int
      */
@@ -82,12 +85,12 @@ class Company
         $this->name = $name;
     }
 
-    public function getFoundationDate(): \DateTime
+    public function getFoundationDate(): DateTime
     {
         return $this->foundationDate;
     }
 
-    public function setFoundationDate(\DateTime $foundationDate): void
+    public function setFoundationDate(DateTime $foundationDate): void
     {
         $this->foundationDate = $foundationDate;
     }
@@ -131,5 +134,4 @@ class Company
     {
         $this->isCompetence = $isCompetence;
     }
-
 }

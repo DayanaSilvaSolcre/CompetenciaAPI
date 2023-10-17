@@ -615,6 +615,9 @@ return [
         'Competence\\V1\\Rest\\SocialPost\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\SocialPost\\Validator',
         ],
+        'Competence\\V1\\Rest\\User\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\User\\Validator',
+        ],
     ],
     'input_filter_specs' => [
         'Competence\\V1\\Rest\\Companies\\Validator' => [
@@ -747,6 +750,20 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'imageName',
+            ],
+        ],
+        'Competence\\V1\\Rest\\User\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'user',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'password',
             ],
         ],
     ],

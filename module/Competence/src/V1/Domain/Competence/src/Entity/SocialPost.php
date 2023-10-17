@@ -23,6 +23,7 @@ class SocialPost
     private $id;
     /**
      * @ORM\Column (type="integer", name="social_network_id")
+     * @ORM\ManyToOne(targetEntity="SocialNetwork")
      *
      * @var int
      */

@@ -35,6 +35,7 @@ class Customer
     private $description;
     /**
      * @ORM\Column(type="integer", name="customer_category_id")
+     * @ORM\ManyToOne(targetEntity="CustomerCategory")
      *
      * @var int
      * */

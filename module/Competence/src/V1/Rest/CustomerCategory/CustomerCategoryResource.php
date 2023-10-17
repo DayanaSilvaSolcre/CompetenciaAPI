@@ -30,7 +30,7 @@ class CustomerCategoryResource extends BaseResource
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return $this->service->delete($id);
     }
 
     /**
