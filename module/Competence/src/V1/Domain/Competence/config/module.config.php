@@ -2,24 +2,16 @@
 
 declare(strict_types=1);
 
-use IntranetDomain\Hydrator\CommentAndFilesHydrator;
-use IntranetDomain\Hydrator\CommentHydrator;
-use IntranetDomain\Hydrator\EntityWithFilesHydrator;
-use IntranetDomain\Hydrator\Factory\CommentAndFilesHydratorFactory;
-use IntranetDomain\Hydrator\Factory\CommentHydratorFactory;
-use IntranetDomain\Hydrator\Factory\EntityWithFilesHydratorFactory;
-use IntranetDomain\Hydrator\Factory\UserHydratorFactory;
-use IntranetDomain\Hydrator\UserHydrator;
-use IntranetDomain\Service;
-use IntranetDomain\Service\DelegatorFactory;
-use IntranetDomain\Service\Factory;
+use CompetenceDomain\Service\CompanyService;
+use CompetenceDomain\Service\DelegatorFactory\CompanyServiceDelegatorFactory;
 
 return [
     'service_manager' => [
-        'factories' => [
-        ],
+        'factories'  => [],
         'delegators' => [
+            CompanyService::class => [
+                CompanyServiceDelegatorFactory::class,
+            ],
         ],
     ],
-
 ];

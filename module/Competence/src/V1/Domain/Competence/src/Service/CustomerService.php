@@ -6,6 +6,6 @@ namespace CompetenceDomain\Service;
 
 use CompetenceCommon\Service\SharedService;
 
-class CustomerServices extends SharedService
+class CustomerService extends SharedService
 {
 }

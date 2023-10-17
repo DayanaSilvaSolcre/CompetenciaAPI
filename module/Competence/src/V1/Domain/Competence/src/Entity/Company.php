@@ -110,7 +110,7 @@ class Company
         return $this->companyClassification;
     }
 
-    public function setCompanyClassification(int $companyClassification): void
+    public function setCompanyClassification(int|CompanyClassification $companyClassification): void
     {
         $this->companyClassification = $companyClassification;
     }
