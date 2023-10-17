@@ -6,6 +6,7 @@ namespace Competence\V1\Rest\EmployeeClassification;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\Stdlib\Parameters;
+use OAuth2\GrantType\RefreshToken;
 use Solcre\SolcreFramework2\Adapter\PaginatedAdapter;
 use Solcre\SolcreFramework2\Common\BaseResource;
 
@@ -30,7 +31,7 @@ class EmployeeClassificationResource extends BaseResource
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return $this->service->delete($id);
     }
 
     /**
