@@ -120,7 +120,7 @@ class Company
         return $this->companyServices;
     }
 
-    public function setCompanyServices(int $companyServices): void
+    public function setCompanyServices(int|CompanyServices $companyServices): void
     {
         $this->companyServices = $companyServices;
     }
