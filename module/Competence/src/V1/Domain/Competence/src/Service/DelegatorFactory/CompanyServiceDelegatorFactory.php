@@ -23,6 +23,7 @@ class CompanyServiceDelegatorFactory implements DelegatorFactoryInterface
         $service = $callback();
         if ($service instanceof CompanyService) {
             $service->setCompanyClassificationService($container->get(CompanyClassificationService::class));
+            $service->setCompanyServicesService($container->get(CompanyServicesService::class));
             $service->setCompanyServices($container->get(CompanyServicesService::class));
         }
 
