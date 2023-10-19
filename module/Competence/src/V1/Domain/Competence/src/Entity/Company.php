@@ -107,7 +107,7 @@ class Company
 
     public function getCompanyClassification(): int
     {
-        return $this->companyClassification->getId();
+        return $this->companyClassification;
     }
 
     public function setCompanyClassification(int|CompanyClassification $companyClassification): void
@@ -117,7 +117,7 @@ class Company
 
     public function getCompanyServices(): int
     {
-        return $this->companyServices->getId();
+        return $this->companyServices;
     }
 
     public function setCompanyServices(int|CompanyServices $companyServices): void

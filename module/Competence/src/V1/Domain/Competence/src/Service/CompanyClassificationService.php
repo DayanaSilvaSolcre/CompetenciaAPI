@@ -10,11 +10,10 @@ use Exception;
 
 class CompanyClassificationService extends SharedService
 {
-
     public function fetch($id)
     {
         $companyClassification = parent::fetch($id);
-        if (!$companyClassification instanceof CompanyClassification) {
+        if (! $companyClassification instanceof CompanyClassification) {
             throw new Exception("Clasificacion no existe");
         }
 
