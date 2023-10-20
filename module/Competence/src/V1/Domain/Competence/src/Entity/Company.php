@@ -53,7 +53,7 @@ class Company
 
     /**
      * @ORM\Column (type="integer", name="company_service_id")
-     * @ORM\ManyToOne(targetEntity="CompanyClassification")
+     * @ORM\ManyToOne(targetEntity="CompanyServices")
      *
      * @var int
      */
