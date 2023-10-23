@@ -16,20 +16,30 @@ class CompanyService extends SharedService
     private CompanyServicesService $companyServicesService;
     private CompanyServicesService $companyServices;
 
+    private function getNormalizedData(array $data): array
+    {
+        return [
+            'name'                   => $data['name'],
+            'foundationDate'         => $data['foundationDate'],
+            'website'                => $data['website'],
+            'companyClassification'  => $data['companyClassification'],
+            'companyServices'        => $data['companyServices'],
+            'isCompetence'           => $data['isCompetence'],
+            'customer'               => $data['customer'],
+            'employeeClassification' => $data['employeeClassification'],
+            'mandosClave'            => $data['mandosClave'],
+            'valorHora'              => $data['valorHora'],
+        ];
+    }
+
     public function update($id, $data)
     {
-        //trae el id de la empresa según el id que le pase de parámetro
         $company = $this->fetch($id);
 
-        //Si no existe tira mensaje de error
         if (! $company instanceof Company) {
             throw new Exception("Company no existe");
         }
-
-        //Si la empresa existe, actualiza su clasificación, service y name
-        $company->setCompanyClassification($this->fetchClassification($data['companyClassification']));
-        $company->setCompanyServices($this->fetchService($data['companyServices']));
-        $company->setName($data['name']);
+        $company = $this->prepareEntity($this->getNormalizedData($data), $company);
 
         $this->entityManager->flush($company);
         return $company;

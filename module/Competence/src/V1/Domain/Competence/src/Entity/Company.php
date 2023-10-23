@@ -64,6 +64,32 @@ class Company
      * @var boolean
      */
     private $isCompetence;
+    /**
+     * @ORM\Column (type="integer", name="customer_id")
+     * @ORM\ManyToOne(targetEntity="Customer")
+     *
+     * @var int
+     */
+    private $customer;
+    /**
+     * @ORM\Column (type="integer", name="employee_classification_id")
+     * @ORM\ManyToOne(targetEntity="EmployeeClassification")
+     *
+     * @var int
+     */
+    private $employeeClassification;
+    /**
+     * @ORM\Column(type="string", name="mandos_clave")
+     *
+     * @var string
+     * */
+    private $mandosClave;
+    /**
+     * @ORM\Column(type="integer", name="valor_hora")
+     *
+     * @var int
+     * */
+    private $valorHora;
 
     public function getId(): int
     {
@@ -134,4 +160,47 @@ class Company
     {
         $this->isCompetence = $isCompetence;
     }
+
+    public function getCustomer(): int
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(int $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    public function getEmployeeClassification(): int
+    {
+        return $this->employeeClassification;
+    }
+
+    public function setEmployeeClassification(int $employeeClassification): void
+    {
+        $this->employeeClassification = $employeeClassification;
+    }
+
+    public function getMandosClave(): string
+    {
+        return $this->mandosClave;
+    }
+
+    public function setMandosClave(string $mandosClave): void
+    {
+        $this->mandosClave = $mandosClave;
+    }
+
+    public function getValorHora(): int
+    {
+        return $this->valorHora;
+    }
+
+    public function setValorHora(int $valorHora): void
+    {
+        $this->valorHora = $valorHora;
+    }
+
+
+
 }

@@ -28,6 +28,7 @@ class SocialNetwork
      */
     private $name;
 
+
     public function getId(): int
     {
         return $this->id;
@@ -47,4 +48,11 @@ class SocialNetwork
     {
         $this->name = $name;
     }
+
+    public function getFollowers(): int
+    {
+        return $this->followers;
+    }
+
+
 }

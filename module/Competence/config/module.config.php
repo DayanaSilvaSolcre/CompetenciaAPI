@@ -657,6 +657,30 @@ return [
                 'filters' => [],
                 'name' => 'isCompetence',
             ],
+            6 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'customer',
+            ],
+            7 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'employeeClassification',
+            ],
+            8 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'mandosClave',
+            ],
+            9 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'valorHora',
+            ],
         ],
         'Competence\\V1\\Rest\\CompaniesClassifications\\Validator' => [
             0 => [
