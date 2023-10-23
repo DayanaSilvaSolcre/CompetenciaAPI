@@ -11,6 +11,7 @@ return [
             \Competence\V1\Rest\SocialNetwork\SocialNetworkResource::class => \Competence\V1\Rest\SocialNetwork\SocialNetworkResourceFactory::class,
             \Competence\V1\Rest\SocialPost\SocialPostResource::class => \Competence\V1\Rest\SocialPost\SocialPostResourceFactory::class,
             \Competence\V1\Rest\User\UserResource::class => \Competence\V1\Rest\User\UserResourceFactory::class,
+            \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalResource::class => \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalResourceFactory::class,
         ],
     ],
     'router' => [
@@ -96,6 +97,15 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.employee-data-historical' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/employee-data-historical[/:employee_data_historical_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -109,6 +119,7 @@ return [
             6 => 'competence.rest.social-network',
             7 => 'competence.rest.social-post',
             8 => 'competence.rest.user',
+            9 => 'competence.rest.employee-data-historical',
         ],
     ],
     'api-tools-rest' => [
@@ -301,6 +312,27 @@ return [
             'collection_class' => \Competence\V1\Rest\User\UserCollection::class,
             'service_name' => 'User',
         ],
+        'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
+            'listener' => \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalResource::class,
+            'route_name' => 'competence.rest.employee-data-historical',
+            'route_identifier_name' => 'employee_data_historical_id',
+            'collection_name' => 'employee_data_historical',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\EmployeeDataHistorical::class,
+            'collection_class' => \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalCollection::class,
+            'service_name' => 'EmployeeDataHistorical',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -313,6 +345,7 @@ return [
             'Competence\\V1\\Rest\\SocialNetwork\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\SocialPost\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -360,6 +393,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -395,6 +433,10 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\User\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -588,6 +630,30 @@ return [
                 'route_identifier_name' => 'user_id',
                 'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
             ],
+            \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-data-historical',
+                'route_identifier_name' => 'employee_data_historical_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-data-historical',
+                'route_identifier_name' => 'employee_data_historical_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\EmployeeDataHistorical::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-data-historical',
+                'route_identifier_name' => 'employee_data_historical_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
+            'Competence\\V1\\Rest\\Companies' => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.employee-data-historical',
+                'route_identifier_name' => 'employee_data_historical_id',
+                'is_collection' => true,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
@@ -617,6 +683,9 @@ return [
         ],
         'Competence\\V1\\Rest\\User\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\User\\Validator',
+        ],
+        'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\EmployeeDataHistorical\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -788,6 +857,38 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'password',
+            ],
+        ],
+        'Competence\\V1\\Rest\\EmployeeDataHistorical\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'company',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'classificationEmployee',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'date',
+            ],
+            3 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'quantity',
+            ],
+            4 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'hourlyPrice',
             ],
         ],
     ],

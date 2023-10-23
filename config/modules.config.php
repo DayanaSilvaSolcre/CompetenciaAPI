@@ -6,7 +6,7 @@
  * The previous config file has been stored in ./config/modules.config.old
  */
 return [
-    'Laminas\Cache',
+    'Laminas\\Cache',
     'Laminas\\Mvc\\I18n',
     'Laminas\\I18n',
     'Laminas\\ComposerAutoloading',
@@ -29,10 +29,10 @@ return [
     'Laminas\\ApiTools\\Rest',
     'Laminas\\ApiTools\\Rpc',
     'Laminas\\ApiTools\\Versioning',
-    "Solcre\\SolcreFramework2",
+    'Solcre\\SolcreFramework2',
     'DoctrineModule',
     'DoctrineORMModule',
-    'Laminas\Cache\Storage\Adapter\Memory',
+    'Laminas\\Cache\\Storage\\Adapter\\Memory',
     'Application',
     'Competence',
 ];
