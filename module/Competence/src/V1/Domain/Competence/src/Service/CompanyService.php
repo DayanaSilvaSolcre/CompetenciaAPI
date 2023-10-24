@@ -34,6 +34,7 @@ class CompanyService extends SharedService
 
     public function update($id, $data)
     {
+        var_dump('entro');die;
         $company = $this->fetch($id);
 
         if (! $company instanceof Company) {

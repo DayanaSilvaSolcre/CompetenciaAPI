@@ -36,12 +36,14 @@ class EmployeeDataHistorical
      * @var int
      */
     private $classificationEmployee;
+
     /**
-     * @ORM\Column (type="date")
+     * @ORM\Column (type="datetime")
      *
      * @var DateTime
      */
     private $date;
+
     /**
      * @ORM\Column (type="integer")
      *
@@ -64,6 +66,16 @@ class EmployeeDataHistorical
     {
         $this->id = $id;
     }
+    public function getDate(): DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
 
     public function getCompany(): int
     {
@@ -85,15 +97,6 @@ class EmployeeDataHistorical
         $this->classificationEmployee = $classificationEmployee;
     }
 
-    public function getDate(): DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(DateTime $date): void
-    {
-        $this->date = $date;
-    }
 
     public function getQuantity(): int
     {

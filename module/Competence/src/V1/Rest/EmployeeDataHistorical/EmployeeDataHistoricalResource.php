@@ -5,13 +5,24 @@ declare(strict_types=1);
 namespace Competence\V1\Rest\EmployeeDataHistorical;
 
 use Competence\V1\Rest\Companies\CompaniesCollection;
+use CompetenceDomain\Service\EmployeeDataHistoricalService;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\Stdlib\Parameters;
 use Solcre\SolcreFramework2\Adapter\PaginatedAdapter;
 use Solcre\SolcreFramework2\Common\BaseResource;
+//use CompetenceDomain\Service\EmployeeDataHistoricalService;
 
 class EmployeeDataHistoricalResource extends BaseResource
 {
+//    private  EmployeeDataHistoricalService $employeeDataHistoricalService;
+//
+//    public function __construct(
+//        EmployeeDataHistoricalService $employeeDataHistoricalService
+//    )
+//    {
+//        $this->employeeDataHistoricalService = $employeeDataHistoricalService;
+//    }
+
     /**
      * Create a resource
      *
@@ -69,4 +80,5 @@ class EmployeeDataHistoricalResource extends BaseResource
     {
         return $this->service->update($id, $data);
     }
+
 }

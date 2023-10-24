@@ -12,6 +12,7 @@ return [
             \Competence\V1\Rest\SocialPost\SocialPostResource::class => \Competence\V1\Rest\SocialPost\SocialPostResourceFactory::class,
             \Competence\V1\Rest\User\UserResource::class => \Competence\V1\Rest\User\UserResourceFactory::class,
             \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalResource::class => \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalResourceFactory::class,
+            \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalResource::class => \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalResourceFactory::class,
         ],
     ],
     'router' => [
@@ -106,6 +107,15 @@ return [
                     ],
                 ],
             ],
+            'competence.rest.social-network-historical' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/social-network-historical[/:social_network_historical_id]',
+                    'defaults' => [
+                        'controller' => 'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -120,6 +130,7 @@ return [
             7 => 'competence.rest.social-post',
             8 => 'competence.rest.user',
             9 => 'competence.rest.employee-data-historical',
+            10 => 'competence.rest.social-network-historical',
         ],
     ],
     'api-tools-rest' => [
@@ -333,6 +344,27 @@ return [
             'collection_class' => \Competence\V1\Rest\EmployeeDataHistorical\EmployeeDataHistoricalCollection::class,
             'service_name' => 'EmployeeDataHistorical',
         ],
+        'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller' => [
+            'listener' => \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalResource::class,
+            'route_name' => 'competence.rest.social-network-historical',
+            'route_identifier_name' => 'social_network_historical_id',
+            'collection_name' => 'social_network_historical',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CompetenceDomain\Entity\SocialNetworkHistorical::class,
+            'collection_class' => \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalCollection::class,
+            'service_name' => 'SocialNetworkHistorical',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -346,6 +378,7 @@ return [
             'Competence\\V1\\Rest\\SocialPost\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\User\\Controller' => 'HalJson',
             'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => 'HalJson',
+            'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -398,6 +431,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Competence\\V1\\Rest\\Companies\\Controller' => [
@@ -437,6 +475,10 @@ return [
                 1 => 'application/json',
             ],
             'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
+                0 => 'application/vnd.competence.v1+json',
+                1 => 'application/json',
+            ],
+            'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller' => [
                 0 => 'application/vnd.competence.v1+json',
                 1 => 'application/json',
             ],
@@ -654,6 +696,24 @@ return [
                 'route_identifier_name' => 'employee_data_historical_id',
                 'is_collection' => true,
             ],
+            \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network-historical',
+                'route_identifier_name' => 'social_network_historical_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \Competence\V1\Rest\SocialNetworkHistorical\SocialNetworkHistoricalCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network-historical',
+                'route_identifier_name' => 'social_network_historical_id',
+                'is_collection' => true,
+            ],
+            \CompetenceDomain\Entity\SocialNetworkHistorical::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'competence.rest.social-network-historical',
+                'route_identifier_name' => 'social_network_historical_id',
+                'hydrator' => \Solcre\SolcreFramework2\Hydrator\EntityHydrator::class,
+            ],
         ],
     ],
     'api-tools-content-validation' => [
@@ -686,6 +746,9 @@ return [
         ],
         'Competence\\V1\\Rest\\EmployeeDataHistorical\\Controller' => [
             'input_filter' => 'Competence\\V1\\Rest\\EmployeeDataHistorical\\Validator',
+        ],
+        'Competence\\V1\\Rest\\SocialNetworkHistorical\\Controller' => [
+            'input_filter' => 'Competence\\V1\\Rest\\SocialNetworkHistorical\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -889,6 +952,38 @@ return [
                 'validators' => [],
                 'filters' => [],
                 'name' => 'hourlyPrice',
+            ],
+        ],
+        'Competence\\V1\\Rest\\SocialNetworkHistorical\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'company',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'socialNetwork',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'date',
+            ],
+            3 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'lastActivityDate',
+            ],
+            4 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'folowersQuantity',
             ],
         ],
     ],
